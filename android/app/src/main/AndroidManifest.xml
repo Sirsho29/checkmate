@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.checkmate">
+    package="com.checkmate.checkmategame">
    <application
         android:label="checkmate"
         android:icon="@mipmap/ic_launcher">
