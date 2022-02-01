@@ -47,7 +47,7 @@ class SplashScreen extends StatelessWidget {
             } else {
               _authProvider.initLogin(snapshot.data);
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                _navigatorService.replaceNavigate(context, const HomePage());
+                _navigatorService.replaceNavigate(context, HomePage());
               });
 
               return const SizedBox();

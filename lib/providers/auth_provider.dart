@@ -11,6 +11,8 @@ class AuthProvider extends ChangeNotifier {
 
   bool _isLoggingIn = false;
 
+  String userId;
+
   final NavigatorService _navigatorService = NavigatorService();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -42,7 +44,8 @@ class AuthProvider extends ChangeNotifier {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-      await _auth.signInWithCredential(credential);
+      UserCredential _userCreds = await _auth.signInWithCredential(credential);
+      _firebaseUser = _userCreds.user;
       changeLoggingInStatus(changeTo: false, notify: false);
     } on FirebaseAuthException catch (e) {
       changeLoggingInStatus(changeTo: false);
