@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "164622801051",
+    "project_id": "checkmate-game",
+    "storage_bucket": "checkmate-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164622801051:android:93d484217cc5bbad8c8e3e",
+        "android_client_info": {
+          "package_name": "com.checkmate.checkmategame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "164622801051-44om3cujj200qpclh3247tj65ne3t4hr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.checkmate.checkmategame",
+            "certificate_hash": "af55548d5b7e89aea023b10959d9ed105927a1bd"
+          }
+        },
+        {
+          "client_id": "164622801051-emqio5i02e655ffockei81gq298llu0s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBspCsgLsXILHBisQ_8PGlJZnhz6Cc0gvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "164622801051-emqio5i02e655ffockei81gq298llu0s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
