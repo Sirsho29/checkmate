@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme extends ChangeNotifier {
@@ -22,6 +21,7 @@ class AppTheme extends ChangeNotifier {
         backgroundColor: Colors.white,
         primaryColorDark: Colors.black87,
         primaryColorLight: Colors.black54,
+        scaffoldBackgroundColor: Color.fromRGBO(69, 73, 64, 1),
         // primaryColor: Colors.black54,
         colorScheme: const ColorScheme(
           primary: Color.fromRGBO(69, 73, 64, 1),

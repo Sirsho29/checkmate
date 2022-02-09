@@ -16,7 +16,7 @@ class NewChessBoard extends StatefulWidget {
 
 class _NewChessBoardState extends State<NewChessBoard> {
   ChessBoardController controller = ChessBoardController();
-  int wTime, bTime = 300;
+  int wTime, bTime = 600;
 
   showWinDialog(String msg, String color) {
     controller.clearBoard();
@@ -47,8 +47,8 @@ class _NewChessBoardState extends State<NewChessBoard> {
     FirebaseFirestore.instance.collection("modelGames").doc("testgame").set({
       "fen": controller.getFen(),
       "move": "w",
-      "wTime": 300,
-      "bTime": 300,
+      "wTime": 600,
+      "bTime": 600,
       "win": null,
       "msg": null,
     });
@@ -59,7 +59,18 @@ class _NewChessBoardState extends State<NewChessBoard> {
   Widget build(BuildContext context) {
     // controller.
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+        actions: [
+          Image.asset('assets/logo/1.png'),
+        ],
+        title: Text(
+          "Online Multiplayer",
+          style: TextStyle(
+            fontWeight: FontWeight.w300,
+          ),
+        ),
+      ),
       body: SizedBox(
         height: SizeConfig.screenHeight,
         width: SizeConfig.screenWidth,
@@ -91,11 +102,19 @@ class _NewChessBoardState extends State<NewChessBoard> {
                       .update({
                     "fen": controller.getFen(),
                     "white": doc["white"] ?? _userAuth.currentUser.uid,
+                    "wDp": doc["wDp"] ?? _userAuth.currentUser.photoURL,
+                    "wName": doc["wName"] ?? _userAuth.currentUser.displayName,
+                    "bDp": doc["wDp"] == null
+                        ? null
+                        : _userAuth.currentUser.photoURL,
+                    "bName": doc["wName"] == null
+                        ? null
+                        : _userAuth.currentUser.displayName,
                     "black":
                         doc["white"] == null ? null : _userAuth.currentUser.uid,
                     "move": "w",
-                    "wTime": 300,
-                    "bTime": 300,
+                    "wTime": 600,
+                    "bTime": 600,
                     "win": null,
                     "msg": null,
                   });
@@ -107,9 +126,11 @@ class _NewChessBoardState extends State<NewChessBoard> {
                       .doc("testgame")
                       .update({
                     "black": _userAuth.currentUser.uid,
+                    "bDp": _userAuth.currentUser.photoURL,
+                    "bName": _userAuth.currentUser.displayName,
                     "move": "w",
-                    "wTime": 300,
-                    "bTime": 300,
+                    "wTime": 600,
+                    "bTime": 600,
                     "win": null,
                     "msg": null,
                   });
@@ -126,10 +147,18 @@ class _NewChessBoardState extends State<NewChessBoard> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    SizedBox(
+                      height: 20.0,
+                    ),
                     if (doc["white"] != null && doc["black"] != null)
                       UserContainerGameBoard(
-                        image: "test",
-                        username: "User 2",
+                        isMe: false,
+                        image: doc["white"] == _userAuth.currentUser.uid
+                            ? doc["bDp"]
+                            : doc["wDp"],
+                        username: doc["white"] == _userAuth.currentUser.uid
+                            ? doc["bName"] ?? "User 2"
+                            : doc["wName"] ?? "User 2",
                         time: ChessTimer(
                           init: doc["white"] == _userAuth.currentUser.uid
                               ? doc["bTime"]
@@ -167,7 +196,7 @@ class _NewChessBoardState extends State<NewChessBoard> {
                       child: Center(
                         child: ChessBoard(
                           controller: controller,
-                          boardColor: BoardColor.orange,
+                          boardColor: BoardColor.brown,
                           enableUserMoves: (doc["move"] == "w" &&
                                   playerColor == PlayerColor.white) ||
                               (doc["move"] == "b" &&
@@ -191,8 +220,8 @@ class _NewChessBoardState extends State<NewChessBoard> {
                     ),
                     if (doc["white"] != null && doc["black"] != null)
                       UserContainerGameBoard(
-                        image: "test",
-                        username: "User 1",
+                        image: _userAuth.currentUser.photoURL,
+                        username: _userAuth.currentUser.displayName,
                         time: ChessTimer(
                           init: doc["white"] == _userAuth.currentUser.uid
                               ? doc["wTime"]
@@ -278,8 +307,8 @@ class _ChessTimerState extends State<ChessTimer> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      time.toString(),
-      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      "Time Left : " + time.toString(),
+      style: TextStyle(color: Colors.white70),
     );
   }
 }
@@ -288,56 +317,47 @@ class UserContainerGameBoard extends StatelessWidget {
   final String username;
   final String image;
   final Widget time;
+  final bool isMe;
   const UserContainerGameBoard(
-      {Key key, this.image, this.time, this.username = ""})
+      {Key key, this.image, this.time, this.username = "", this.isMe = true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100,
-      width: 100,
-      child: Card(
-        shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.orange[800]),
-            borderRadius: const BorderRadius.all(Radius.circular(8.0))),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch, // add this
-          children: <Widget>[
-            // Container(
-            //   height: 70,
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.only(
-            //         topLeft: Radius.circular(8.0),
-            //         topRight: Radius.circular(8.0)),
-            //     image: DecorationImage(
-            //       fit: BoxFit.fill,
-            //       image: image == null || image == "test"
-            //           ? AssetImage(
-            //               'assets/images/playerProfile.jpg',
-            //               // width: 300,
-            //             )
-            //           : CachedNetworkImageProvider(
-            //               image,
-            //             ),
-            //     ),
-            //   ),
-            // ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(8),
-                        bottomRight: Radius.circular(8)),
-                    color: Colors.orange[900]),
-                child: Center(
-                  child: time,
-                ),
-              ),
+    return Row(
+      mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        if (!isMe)
+          CircleAvatar(
+            child: Image.network(
+              image,
+              fit: BoxFit.cover,
             ),
-          ],
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            crossAxisAlignment:
+                isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            children: [
+              Text(
+                username,
+                style: TextStyle(color: Colors.white),
+              ),
+              time
+            ],
+          ),
         ),
-      ),
+        if (isMe)
+          CircleAvatar(
+            child: Image.network(
+              image,
+              fit: BoxFit.cover,
+            ),
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+          ),
+      ],
     );
   }
 }
