@@ -1,5 +1,6 @@
 import 'package:checkmate/globals/navigation/navigator_services.dart';
 import 'package:checkmate/screens/auth/splash.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -45,6 +46,21 @@ class AuthProvider extends ChangeNotifier {
       );
       UserCredential _userCreds = await _auth.signInWithCredential(credential);
       _firebaseUser = _userCreds.user;
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(FirebaseAuth.instance.currentUser.uid)
+          .set({
+        'active': true,
+        'request': false,
+        'requestGameId': "",
+        'requestPlayerId': "",
+        'requestPlayerName': "",
+        'requestPlayerImage': "",
+        'playerName': FirebaseAuth.instance.currentUser.displayName,
+        'playerImage': FirebaseAuth.instance.currentUser.photoURL,
+        'playerId': FirebaseAuth.instance.currentUser.uid,
+        'inGame': false,
+      });
       changeLoggingInStatus(changeTo: false, notify: false);
     } on FirebaseAuthException catch (e) {
       changeLoggingInStatus(changeTo: false);

@@ -40,17 +40,17 @@ class AppTheme extends ChangeNotifier {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size(150, 50),
-            maximumSize: const Size(200, 50),
-            primary: const Color.fromRGBO(245, 140, 110, 1),
+            minimumSize: const Size(double.infinity, 50),
+            maximumSize: const Size(double.infinity, 50),
+            primary: Color.fromRGBO(255, 138, 52, 1),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50.0),
+              borderRadius: BorderRadius.circular(12.0),
             ),
             textStyle: const TextStyle(
                 color: Colors.white,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w700,
-                fontSize: 12.0),
+                fontSize: 16.0),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
@@ -60,7 +60,7 @@ class AppTheme extends ChangeNotifier {
             primary: Colors.white,
             side: const BorderSide(
               width: 2.0,
-              color: Color.fromRGBO(251, 238, 225, 1),
+              color: Color.fromRGBO(255, 138, 52, 1),
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50.0),
@@ -69,7 +69,7 @@ class AppTheme extends ChangeNotifier {
                 color: Color.fromRGBO(69, 73, 64, 1),
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w700,
-                fontSize: 12.0),
+                fontSize: 16.0),
           ),
         ),
       );

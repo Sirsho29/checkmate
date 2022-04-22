@@ -5,23 +5,24 @@ class NavigatorService {
     return Navigator.of(ctx).push(FadeRoute(page: page));
   }
 
-  Future<Object> pop(BuildContext ctx, Widget page) {
-    return Navigator.of(ctx).push(FadeRoute(page: page));
+  void pop(BuildContext ctx) {
+    return Navigator.of(ctx).pop();
   }
 
   Future<Object> replaceNavigate(BuildContext ctx, Widget page) {
     return Navigator.of(ctx).pushReplacement(FadeRoute(page: page));
   }
 
-  Future<Object> clearNavigate(BuildContext ctx, Widget page) {
-    return Navigator.of(ctx)
-        .pushAndRemoveUntil(FadeRoute(page: page), (route) => route.isFirst);
+  void clearNavigate(BuildContext ctx, Widget page) {
+    Navigator.of(ctx).popUntil((route) => route.isFirst);
+    // return Navigator.of(ctx).pushReplacement(FadeRoute(page: page));
   }
 
   void showSnackbar(BuildContext ctx, String msg) {
     ScaffoldMessenger.of(ctx).showSnackBar(
       SnackBar(
         content: Text(msg),
+        backgroundColor: Colors.black,
       ),
     );
   }

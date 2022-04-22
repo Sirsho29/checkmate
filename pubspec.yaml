@@ -37,6 +37,8 @@ dependencies:
   cloud_firestore: ^3.1.7
   flutter_dialogs: ^2.1.0
   flutter_chess_board: ^1.0.1
+  chess: ^0.7.0
+  top_snackbar_flutter: ^1.0.2
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -1,4 +1,5 @@
 import 'package:checkmate/globals/designs/theme.dart';
+import 'package:checkmate/globals/widgets/lifecycle.dart';
 import 'package:checkmate/providers/auth_provider.dart';
 import 'package:checkmate/screens/auth/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,16 +25,7 @@ class MyApp extends StatelessWidget {
           create: (ctx) => AuthProvider(),
         ),
       ],
-      child: Consumer<AppTheme>(builder: (context, theme, _) {
-        return MaterialApp(
-          title: 'Chekmate',
-          themeMode: theme.getCurrentThemeMode(),
-          theme: theme.lightTheme(),
-          darkTheme: theme.darkTheme(),
-          home: SplashScreen(),
-          debugShowCheckedModeBanner: false,
-        );
-      }),
+      child: LifecycleWatcher(),
     );
   }
 }
